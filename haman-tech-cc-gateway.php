@@ -22,7 +22,7 @@ function ht_cc_gateway_bootstrap()
         public function __construct()
         {
             $this->id = 'ht_card_to_card';
-            $this->method_title = 'درگاه کارت به کارت هامن تک';
+            $this->method_title = 'درگاه کارت به کارت هامان تک';
             $this->method_description = 'پرداخت کارت به کارت با چند حساب بانکی';
             $this->has_fields = false;
             $this->init_form_fields();
@@ -235,7 +235,10 @@ function ht_cc_gateway_bootstrap()
                                             <?php echo esc_html($this->get_option("card_$i")); ?>
                                         </div>
                                         <button type="button" class="ht-copy" onclick="htCopy('card<?php echo $i; ?>')">
-                                            کپی
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
@@ -249,7 +252,10 @@ function ht_cc_gateway_bootstrap()
                                                 <?php echo esc_html($this->get_option("iban_$i")); ?>
                                             </div>
                                             <button type="button" class="ht-copy" onclick="htCopy('iban<?php echo $i; ?>')">
-                                                کپی
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
                                             </button>
                                         </div>
                                     </div>
