@@ -191,7 +191,33 @@ color:white;
 .ht-form h3{
 display:none;
 }
-
+#htReceiptInput {
+  text-align: center;
+}
+.ht-upload-area {
+  padding: 10px;
+  border: 1px dashed rgb(255, 255, 255);
+  margin-block: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+.ht-submit-btn {
+  margin-inline: auto;
+  display: block;
+  border-radius: 7px;
+  background: rgb(65, 255, 65);
+}
+#htPreviewWrapper {
+  margin-bottom: 10px;
+  margin-inline: auto;
+  width: 100%;
+  text-align: center;
+}
+.ht-success {
+  text-align: center;
+  margin-block: 15px;
+  font-size: 1.15rem;
+}
 @media only screen and (max-width:480px){
 .ht-wrap{
 padding:25px;
