@@ -2,7 +2,7 @@
 /**
  * Plugin Name: HamanTech WooCommerce Card to Card Gateway
  * Description: درگاه کارت به کارت ووکامرس با پشتیبانی از چند حساب بانکی، QRCode، آپلود رسید و رابط فارسی
- * Version: 7.0.0
+ * Version: 7.3.0
  * Author: HamanTech Reza Rafiei
  * Text Domain: haman-tech-cc-gateway
  */
@@ -329,61 +329,80 @@ function ht_upload_receipt()
         wp_send_json_error($uploaded['error']);
     }
     $file_url = $uploaded['url'];
-    update_post_meta(
-        $order_id,
+    $order = wc_get_order($order_id);
+
+    if (!$order) {
+        wp_send_json_error('سفارش پیدا نشد');
+    }
+    $order->update_meta_data(
         '_ht_payment_receipt',
         esc_url_raw($file_url)
     );
-    $order = wc_get_order($order_id);
-
-    if ($order) {
-        $order->add_order_note(
-            'رسید پرداخت توسط مشتری ارسال شد.'
-        );
-        $order->update_status('on-hold');
-    }
-
+    
+    $order->save();
+    $order->add_order_note(
+        'رسید پرداخت توسط مشتری ارسال شد.'
+    );
+    $order->update_status('on-hold');
     wp_send_json_success();
 }
 add_action(
     'add_meta_boxes',
     'ht_register_receipt_metabox'
 );
+
+add_action(
+    'add_meta_boxes_woocommerce_page_wc-orders',
+    'ht_register_receipt_metabox'
+);
+
 function ht_register_receipt_metabox()
 {
-
     add_meta_box(
         'ht-payment-receipt',
         'رسید پرداخت مشتری',
         'ht_render_receipt_metabox',
-        'shop_order',
+        wc_get_page_screen_id('shop-order'),
         'side',
         'high'
     );
 }
-function ht_render_receipt_metabox($post)
+function ht_render_receipt_metabox($post_or_order_object)
 {
-    $receipt = get_post_meta(
-        $post->ID,
-        '_ht_payment_receipt',
-        true
+    $order = is_a($post_or_order_object, 'WC_Order')
+        ? $post_or_order_object
+        : wc_get_order($post_or_order_object->ID);
+
+    if (!$order) {
+
+        echo '<p>سفارش پیدا نشد.</p>';
+        return;
+    }
+    $receipt = $order->get_meta(
+        '_ht_payment_receipt'
     );
 
     if (!$receipt) {
+
         echo '<p>رسیدی ثبت نشده است.</p>';
         return;
     }
+
     ?>
     <div style="text-align:center">
-
-        <a href="<?php echo esc_url($receipt); ?>" target="_blank">
-
-            <img src="<?php echo esc_url($receipt); ?>" style="
+        <a
+            href="<?php echo esc_url($receipt); ?>"
+            target="_blank"
+        >
+            <img
+                src="<?php echo esc_url($receipt); ?>"
+                style="
                     width:100%;
                     border-radius:12px;
                     border:1px solid #ddd;
                     margin-bottom:10px;
-                ">
+                "
+            >
         </a>
     </div>
     <?php
