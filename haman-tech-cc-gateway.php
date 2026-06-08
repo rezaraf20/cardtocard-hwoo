@@ -2,7 +2,7 @@
 /**
  * Plugin Name: HamanTech WooCommerce Card to Card Gateway
  * Description: درگاه کارت به کارت ووکامرس با پشتیبانی از چند حساب بانکی، QRCode، آپلود رسید و رابط فارسی
- * Version: 7.0.0
+ * Version: 7.3.0
  * Author: HamanTech Reza Rafiei
  * Text Domain: haman-tech-cc-gateway
  */
